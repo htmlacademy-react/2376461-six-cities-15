@@ -46,12 +46,12 @@ export default function MainPage ({data}: {data: CardType[]}): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <LocationButton name="Paris" isActive = {false} />
-              <LocationButton name="Cologne" isActive = {false} />
-              <LocationButton name="Brussels" isActive = {false} />
-              <LocationButton name="Amsterdam" isActive />
-              <LocationButton name="Hamburg" isActive = {false} />
-              <LocationButton name="Dusseldorf" isActive = {false} />
+              <LocationButton key={0} name="Paris" isActive = {false} />
+              <LocationButton key={1} name="Cologne" isActive = {false} />
+              <LocationButton key={2} name="Brussels" isActive = {false} />
+              <LocationButton key={3} name="Amsterdam" isActive />
+              <LocationButton key={4} name="Hamburg" isActive = {false} />
+              <LocationButton key={5} name="Dusseldorf" isActive = {false} />
             </ul>
           </section>
         </div>
