@@ -1,7 +1,5 @@
 
-import { CardType } from '../types';
-
-export const cardsData: CardType[] = [
+export const cardsData = [
   {
     'id': '2c15426f-950c-4c95-96d6-76fd8cb3c530',
     'title': 'The Joshua Tree House',

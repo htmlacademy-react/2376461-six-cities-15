@@ -2,9 +2,9 @@ import CardOffer from '../components/card-offer';
 import LocationButton from '../components/location-button';
 import PlacesSortForm from '../components/places-sort-form';
 
-import { CardType } from '../types';
+import { typeCard } from '../types';
 
-export default function MainPage ({data}: {data: CardType[]}): JSX.Element {
+export default function MainPage ({data}: {data: typeCard[]}): JSX.Element {
 
   const cardList = data.map((item) => (
     <CardOffer key={item.id} {...item} />

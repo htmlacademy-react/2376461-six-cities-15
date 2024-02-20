@@ -1,4 +1,5 @@
-type CardType = {
+
+type typeCard = {
   id: string;
   title: string;
   type: string;
@@ -14,4 +15,4 @@ type LocationButtonType = {
   isActive: boolean;
 };
 
-export type { CardType, LocationButtonType };
+export type { LocationButtonType, typeCard };
