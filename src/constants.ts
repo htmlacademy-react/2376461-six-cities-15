@@ -1,4 +1,4 @@
-const LOCATIONS = {
+export const LOCATIONS = {
   Paris: 'Paris',
   Cologne: 'Cologne',
   Brussels: 'Brussels',
@@ -7,5 +7,15 @@ const LOCATIONS = {
   Dusseldorf: 'Dusseldorf',
 };
 
+export enum AppRoute {
+  Main = '/',
+  Login = '/login',
+  Favorites = '/favorites',
+  Offer = '/offer/:id',
+}
 
-export { LOCATIONS };
+export enum AuthorizationStatus {
+  Auth = 'Auth',
+  NoAuth = 'NoAuth',
+  Unknown = 'Unknown',
+}
