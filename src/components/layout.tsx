@@ -2,9 +2,9 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../constants';
 import { getAuthorizationStatus } from '../mock/auth-status';
 
-type LayoutStateCartage = [string, string, boolean];
+type LayoutStateTuple = [string, string, boolean];
 
-const getLayoutState = (pathName: AppRoute): LayoutStateCartage => {
+const getLayoutState = (pathName: AppRoute): LayoutStateTuple => {
 
   switch(pathName){
     case AppRoute.Main:
@@ -24,7 +24,7 @@ export default function Layout () {
 
   const {pathname} = useLocation();
   const [mainClassName,linkClassName,shouldRenderUser] = getLayoutState(pathname as AppRoute);
-  const authorizationStatus: AuthorizationStatus = getAuthorizationStatus();
+  const authorizationStatus = getAuthorizationStatus();
 
   return(
     <div className={mainClassName}>

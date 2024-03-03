@@ -14,8 +14,8 @@ export enum AppRoute {
   Offer = '/offer/:id',
 }
 
-export enum AuthorizationStatus {
-  Auth = 'Auth',
-  NoAuth = 'NoAuth',
-  Unknown = 'Unknown',
-}
+export const AuthorizationStatus = {
+  Auth: 'Auth',
+  NoAuth: 'NoAuth',
+  Unknown: 'Unknown',
+} as const;
