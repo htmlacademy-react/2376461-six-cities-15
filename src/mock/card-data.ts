@@ -1,53 +1,118 @@
 
 export const cardsData = [
   {
-    'id': '2c15426f-950c-4c95-96d6-76fd8cb3c530',
-    'title': 'The Joshua Tree House',
-    'type': 'house',
-    'price': 555,
-    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/7.jpg',
-    'isFavorite': false,
-    'isPremium': false,
-    'rating': 1.4
-  },
-  {
-    'id': '72ff73d1-5196-42c5-bf4e-29c0ed17671d',
+    'id': '1dc846bf-d4ac-43ab-8da9-d8c33bdbe9d7',
     'title': 'Beautiful & luxurious apartment at great location',
     'type': 'house',
-    'price': 852,
-    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/7.jpg',
-    'isFavorite': false,
+    'price': 385,
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/11.jpg',
+    'city': {
+      'name': 'Cologne',
+      'location': {
+        'latitude': 48.85661,
+        'longitude': 2.351499,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 48.868610000000004,
+      'longitude': 2.342499,
+      'zoom': 16
+    },
+    'isFavorite': true,
     'isPremium': true,
-    'rating': 3.7
+    'rating': 3.4
   },
   {
-    'id': '05f40665-d4f3-4253-a625-56b17a5d38a1',
-    'title': 'Loft Studio in the Central Area',
-    'type': 'apartment',
-    'price': 462,
-    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/10.jpg',
+    'id': '9f7c9043-29cd-4128-ac0d-889283f09acf',
+    'title': 'Amazing and Extremely Central Flat',
+    'type': 'room',
+    'price': 230,
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/17.jpg',
+    'city': {
+      'name': 'Paris',
+      'location': {
+        'latitude': 48.85661,
+        'longitude': 2.351499,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 48.858610000000006,
+      'longitude': 2.330499,
+      'zoom': 16
+    },
     'isFavorite': false,
     'isPremium': false,
-    'rating': 2.4
+    'rating': 3.2
   },
   {
-    'id': '5d2ddefd-e093-4b84-b85b-92ca8fef38f2',
-    'title': 'Waterfront with extraordinary view',
+    'id': 'b73a8604-ca4d-4659-93ff-3a0874961f74',
+    'title': 'Nice, cozy, warm big bed apartment',
+    'type': 'room',
+    'price': 217,
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/18.jpg',
+    'city': {
+      'name': 'Paris',
+      'location': {
+        'latitude': 48.85661,
+        'longitude': 2.351499,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 48.834610000000005,
+      'longitude': 2.335499,
+      'zoom': 16
+    },
+    'isFavorite': false,
+    'isPremium': false,
+    'rating': 1.5
+  },
+  {
+    'id': '975b5fcb-59a4-4063-bf63-f59b8e217723',
+    'title': 'House in countryside',
     'type': 'house',
-    'price': 169,
-    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/15.jpg',
+    'price': 351,
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/18.jpg',
+    'city': {
+      'name': 'Paris',
+      'location': {
+        'latitude': 48.85661,
+        'longitude': 2.351499,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 48.85761,
+      'longitude': 2.358499,
+      'zoom': 16
+    },
+    'isFavorite': false,
+    'isPremium': true,
+    'rating': 2
+  },
+  {
+    'id': '343b71b0-d1e5-4580-bf5c-1f0f3089abb7',
+    'title': 'Waterfront with extraordinary view',
+    'type': 'apartment',
+    'price': 199,
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/4.jpg',
+    'city': {
+      'name': 'Paris',
+      'location': {
+        'latitude': 48.85661,
+        'longitude': 2.351499,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 48.87561,
+      'longitude': 2.375499,
+      'zoom': 16
+    },
     'isFavorite': true,
     'isPremium': false,
-    'rating': 3.1
-  },
-  {
-    'id': '954e374c-866d-48ce-a55e-efd0baa827fc',
-    'title': 'House in countryside',
-    'type': 'room',
-    'price': 233,
-    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/1.jpg',
-    'isFavorite': false,
-    'isPremium': true,
-    'rating': 1.1
+    'rating': 4
   },
 ];
