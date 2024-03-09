@@ -8,8 +8,7 @@ type PrivateRouteProps = {
   children: JSX.Element;
 }
 
-function PrivateRoute(props: PrivateRouteProps): ReactNode {
-  const {authorizationStatus,isReverse, children} = props;
+function PrivateRoute({authorizationStatus,isReverse, children}: PrivateRouteProps): ReactNode {
 
   return (
     authorizationStatus === (isReverse ? AuthorizationStatus.NoAuth : AuthorizationStatus.Auth)

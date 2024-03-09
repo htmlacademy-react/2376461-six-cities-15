@@ -33,7 +33,7 @@ export default function App (): JSX.Element {
             </PrivateRoute>
           }
           />
-          <Route path={AppRoute.Offer} element = {<OfferPage/>}/>
+          <Route path={`${AppRoute.Offer}:id`} element = {<OfferPage/>}/>
         </Route>
         <Route path='*' element = {<ErrorPage/>}/>
       </Routes>
