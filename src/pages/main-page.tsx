@@ -1,27 +1,39 @@
-import CardOffer from '../components/card-offer';
+import { useEffect, useState } from 'react';
+import CardOffer from '../components/card/card-offer';
 import LocationButton from '../components/location-button';
 import PlacesSortForm from '../components/places-sort-form';
 
 import { typeCard } from '../types';
+import { Nullable } from 'vitest';
+import { LOCATIONS } from '../constants';
 
 export default function MainPage ({data}: {data: typeCard[]}): JSX.Element {
 
-  const cardList = data.map((item) => (
-    <CardOffer key={item.id} {...item} />
-  ));
+  const [activeOffer, setActiveOffer] = useState<Nullable<typeCard>>(null);
 
+  useEffect(() => {
+
+  },[activeOffer]);
+
+  const handleHoverOnCard = (offer?: typeCard): void => {
+    setActiveOffer(offer || null);
+  };
+
+  const cardList = data.map((cardItem) => (
+    <CardOffer
+      key={cardItem.id}
+      card={cardItem}
+      handleHover={handleHoverOnCard}
+    />
+  ));
+    //В результате работы 36 строки образуется визуальный баг - синяя полоса сверху. Очеь интересно почему так
   return(
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
-            <LocationButton key={0} name="Paris" isActive = {false} />
-            <LocationButton key={1} name="Cologne" isActive = {false} />
-            <LocationButton key={2} name="Brussels" isActive = {false} />
-            <LocationButton key={3} name="Amsterdam" isActive />
-            <LocationButton key={4} name="Hamburg" isActive = {false} />
-            <LocationButton key={5} name="Dusseldorf" isActive = {false} />
+            {Object.keys(LOCATIONS).map((item) => <LocationButton key={item} name={item} isActive = { activeOffer?.city.name === item } />)}
           </ul>
         </section>
       </div>
