@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CardOffer from '../components/card/card-offer';
 import LocationButton from '../components/location-button';
 import PlacesSortForm from '../components/places-sort-form';
@@ -12,10 +12,6 @@ import { Map } from '../components/map';
 export default function MainPage ({data}: {data: typeCard[]}): JSX.Element {
 
   const [activeOffer, setActiveOffer] = useState<Nullable<typeCard>>(null);
-
-  useEffect(() => {
-
-  },[activeOffer]);
 
   const handleHoverOnCard = (offer?: typeCard): void => {
     setActiveOffer(offer || null);
@@ -35,7 +31,7 @@ export default function MainPage ({data}: {data: typeCard[]}): JSX.Element {
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
-            {Object.keys(LOCATIONS).map((item) => <LocationButton key={item} name={item} isActive = { activeOffer?.city.name === item } />)}
+            {Object.keys(LOCATIONS).map((item) => <LocationButton key={item} name={item} isActive = {false} />)}
           </ul>
         </section>
       </div>
@@ -50,7 +46,7 @@ export default function MainPage ({data}: {data: typeCard[]}): JSX.Element {
             </div>
           </section>
           <div className="cities__right-section">
-            <Map city={data[0].city} offers={data} activeOfferId={activeOffer?.id} key={'map'}/>
+            <Map className='cities__map map' city={data[0].city} offers={data} activeOfferId={activeOffer?.id} key={'map'}/>
           </div>
         </div>
       </div>
