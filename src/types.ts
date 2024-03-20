@@ -51,4 +51,4 @@ type LocationButtonType = {
   isActive: boolean;
 };
 
-export type { LocationButtonType, typeCard, typeOffer };
+export type { LocationButtonType, typeCard, typeOffer, typeLocation, typeCity };
