@@ -21,7 +21,7 @@ type typeCard = {
   title: string;
   type: string;
   price: number;
-  previewImage: string;
+  previewImage?: string;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
