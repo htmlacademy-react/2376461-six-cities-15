@@ -6,6 +6,7 @@ import { offersData } from '../mock/offers-data';
 import { Fragment } from 'react';
 import ErrorPage from './error-page';
 import { capitalizedWord } from '../utils/utils';
+import { Map } from '../components/map';
 
 export default function OfferPage() {
   const isAuth = getAuthorizationStatus();
@@ -15,6 +16,8 @@ export default function OfferPage() {
   if(!currentOffer){
     return <ErrorPage />;
   }
+
+  const nearOffers = [currentOffer];
 
   return (
     <main className="page__main page__main--offer">
@@ -135,7 +138,7 @@ export default function OfferPage() {
             </section>
           </div>
         </div>
-        <section className="offer__map map"></section>
+        <Map className="offer__map map" city={currentOffer.city} activeOfferId={currentOffer.id} offers={nearOffers}/>
       </section>
       <div className="container">
         <section className="near-places places">
