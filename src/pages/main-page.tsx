@@ -3,9 +3,11 @@ import CardOffer from '../components/card/card-offer';
 import LocationButton from '../components/location-button';
 import PlacesSortForm from '../components/places-sort-form';
 
+
 import { typeCard } from '../types';
 import { Nullable } from 'vitest';
 import { LOCATIONS } from '../constants';
+import { Map } from '../components/map';
 
 export default function MainPage ({data}: {data: typeCard[]}): JSX.Element {
 
@@ -48,7 +50,7 @@ export default function MainPage ({data}: {data: typeCard[]}): JSX.Element {
             </div>
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <Map city={data[0].city} offers={data} activeOfferId={activeOffer?.id} key={'map'}/>
           </div>
         </div>
       </div>
