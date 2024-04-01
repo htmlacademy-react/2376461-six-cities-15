@@ -21,6 +21,15 @@ export const AuthorizationStatus = {
   Unknown: 'Unknown',
 } as const;
 
+export type SortTypesType = typeof SORT_TYPES[keyof typeof SORT_TYPES];
+
+export const SORT_TYPES = {
+  Popular: 'Popular',
+  PriceASC: 'Price: low to high',
+  PriceDESC: 'Price: high to low',
+  Rating: 'Top rated first',
+} as const;
+
 export const URL_MARKER_DEFAULT = './img/pin.svg';
 
 export const URL_MARKER_CURRENT = './img/pin-active.svg';
