@@ -6,9 +6,9 @@ import FavoritesPage from '../pages/favorites-page';
 import OfferPage from '../pages/offer-page';
 import ErrorPage from '../pages/error-page';
 import { AppRoute } from '../constants';
-import { cardsData } from '../mock/card-data';
 import Layout from './layout';
 import { getAuthorizationStatus } from '../mock/auth-status';
+import { store } from '../store';
 
 export default function App (): JSX.Element {
 
@@ -20,7 +20,7 @@ export default function App (): JSX.Element {
           path={AppRoute.Main}
           element = {<Layout />}
         >
-          <Route index element = {<MainPage data={ cardsData }/>}/>
+          <Route index element = {<MainPage data={ store.getState().offers }/>}/>
           <Route path={AppRoute.Login} element = {
             <PrivateRoute authorizationStatus={getAuthorizationStatus()} isReverse>
               <LoginPage/>
@@ -29,7 +29,7 @@ export default function App (): JSX.Element {
           />
           <Route path={AppRoute.Favorites} element = {
             <PrivateRoute authorizationStatus={getAuthorizationStatus()}>
-              <FavoritesPage/>
+              <FavoritesPage data={store.getState().offers}/>
             </PrivateRoute>
           }
           />
