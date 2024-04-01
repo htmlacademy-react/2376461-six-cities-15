@@ -54,9 +54,9 @@ type typeOffer = {
   rating: number;
   description: string;
   bedrooms: number;
-  goods: [string];
+  goods: string[];
   host: typeHost;
-  images: [string];
+  images: string[];
   maxAdults: number;
   }
 

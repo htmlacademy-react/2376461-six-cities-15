@@ -1,9 +1,9 @@
-import { cardsData } from '../mock/card-data';
 import { LOCATIONS } from '../constants';
 import FavoritePlaces from '../components/card/favorite-places';
+import { typeCard } from '../types';
 
-export default function FavoritesPage() {
-  const favoritesList = cardsData.filter((item) => item.isFavorite === true);
+export default function FavoritesPage({data}: {data: typeCard[]}) {
+  const favoritesList = data.filter((item) => item.isFavorite === true);
 
 
   const locationsList = Object.keys(LOCATIONS).map((locationName) => {
