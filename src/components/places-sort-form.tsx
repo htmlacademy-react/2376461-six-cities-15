@@ -1,23 +1,43 @@
+import { Fragment, useState } from 'react';
+import { SORT_TYPES, SortTypesType } from '../constants';
+import { changeSortAction } from '../store/actions';
+import { useAppDispatch } from '../store/helpers';
 
 
-export default function PlacesSortForm (): JSX.Element {
+export default function PlacesSortForm ({currentSort}:{currentSort: SortTypesType}): JSX.Element {
 
+  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const handleCityChange = (sort: SortTypesType): void => {
+    dispatch(changeSortAction(sort));
+    setIsOpen(false);
+  };
+
+  const toggleDropdown = (): void => {
+    setIsOpen(!isOpen);
+  };
+
+  const placesOptions = Object.values(SORT_TYPES).map((item) => (
+    <Fragment key={item}>
+      <li onClick={() => handleCityChange(item)} className={`places__option${item === currentSort ? ' places__option--active' : ''}`} tabIndex={0}>{item}</li>
+    </Fragment>
+  ));
 
   return(
-    <form className="places__sorting" action="#" method="get">
+    <form onClick={toggleDropdown} className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}>
-        Popular
+        {currentSort}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className="places__options places__options--custom places__options--opened">
-        <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-        <li className="places__option" tabIndex={0}>Price: low to high</li>
-        <li className="places__option" tabIndex={0}>Price: high to low</li>
-        <li className="places__option" tabIndex={0}>Top rated first</li>
-      </ul>
+      {isOpen && (
+        <ul className="places__options places__options--custom places__options--opened">
+          {placesOptions}
+        </ul>
+      )}
     </form>
   );
 }

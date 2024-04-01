@@ -8,17 +8,21 @@ import { Nullable } from 'vitest';
 import { LOCATIONS } from '../constants';
 import { Map } from '../components/map';
 import { useAppSelector } from '../store/helpers';
+import { sortCards } from '../utils/sort-cards';
 
 export default function MainPage ({data}: {data: typeCard[]}): JSX.Element {
 
   const [activeOffer, setActiveOffer] = useState<Nullable<typeCard>>(null);
   const currentCity = useAppSelector((state) => state.currentCity);
+  const currentSort = useAppSelector((state) => state.currentSort);
 
   const handleHoverOnCard = (offer?: typeCard): void => {
     setActiveOffer(offer || null);
   };
   const filteredDataByCity = data.filter((item) => item.city.name === currentCity);
-  const cardList = filteredDataByCity.map((cardItem) => (
+  const sortedCards = sortCards(currentSort,filteredDataByCity);
+
+  const cardList = sortedCards.map((cardItem) => (
     <CardOffer
       key={cardItem.id}
       card={cardItem}
@@ -29,7 +33,7 @@ export default function MainPage ({data}: {data: typeCard[]}): JSX.Element {
 
   //В результате работы 36 строки образуется визуальный баг - синяя полоса сверху. Очеь интересно почему так
   return(
-    <main className="page__main page__main--index">
+    <main className= {`page__main page__main--index ${filteredDataByCity.length === 0 ? 'cities__places-container--empty' : ''}`}>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
@@ -43,7 +47,7 @@ export default function MainPage ({data}: {data: typeCard[]}): JSX.Element {
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{filteredDataByCity.length} place{filteredDataByCity.length > 1 ? 's' : ''} to stay in Amsterdam</b>
-            <PlacesSortForm />
+            <PlacesSortForm currentSort={currentSort}/>
             <div className="cities__places-list places__list tabs__content">
               {cardList}
             </div>

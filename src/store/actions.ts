@@ -1,10 +1,11 @@
 import { createAction } from '@reduxjs/toolkit';
-import { CitiesType } from '../constants';
+import { CitiesType, SortTypesType } from '../constants';
 import { typeOffer } from '../types';
 
 const ACTIONS = {
   changeCity: 'main/changeCity',
   setOffers: 'main/setOffers',
+  changeSort: 'main/changeSort',
 };
 
 const changeCityAction = createAction(
@@ -21,7 +22,15 @@ const setOffersAction = createAction(
   }),
 );
 
+const changeSortAction = createAction(
+  ACTIONS.changeSort,
+  (sort: SortTypesType) => ({
+    payload: sort,
+  }),
+);
+
 export {
   setOffersAction,
   changeCityAction,
+  changeSortAction,
 };
