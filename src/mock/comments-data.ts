@@ -1,5 +1,6 @@
+import { typeComment } from '../types';
 
-export const commentsData = [
+export const commentsData: typeComment[] = [
   {
     'id': '1dc846bf-d4ac-43ab-8da9-d8c33bdbe9d7',
     'comment': 'Design interior in most sympathetic area! Complitely renovated, well-equipped, cosy studio in idyllic, over 100 years old wooden house. Calm street, fast connection to center and airport.',

@@ -1,5 +1,6 @@
+import { typeCard } from '../types';
 
-export const cardsData = [
+export const cardsData: typeCard[] = [
   {
     'id': '1dc846bf-d4ac-43ab-8da9-d8c33bdbe9d7',
     'title': 'Beautiful & luxurious apartment at great location',
