@@ -6,6 +6,7 @@ export const LOCATIONS = {
   Hamburg: 'Hamburg',
   Dusseldorf: 'Dusseldorf',
 };
+export type CitiesType = typeof LOCATIONS[keyof typeof LOCATIONS];
 
 export enum AppRoute {
   Main = '/',
