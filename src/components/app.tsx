@@ -8,10 +8,17 @@ import ErrorPage from '../pages/error-page';
 import { AppRoute } from '../constants';
 import Layout from './layout';
 import { getAuthorizationStatus } from '../mock/auth-status';
-import { store } from '../store';
+import { useAppDispatch } from '../store/helpers';
+import { useEffect } from 'react';
+import { fetchAllOffers } from '../store/thunk/offers';
 
 export default function App (): JSX.Element {
 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllOffers());
+  },[dispatch]);
 
   return(
     <BrowserRouter>
@@ -20,7 +27,7 @@ export default function App (): JSX.Element {
           path={AppRoute.Main}
           element = {<Layout />}
         >
-          <Route index element = {<MainPage data={ store.getState().offers }/>}/>
+          <Route index element = {<MainPage/>}/>
           <Route path={AppRoute.Login} element = {
             <PrivateRoute authorizationStatus={getAuthorizationStatus()} isReverse>
               <LoginPage/>
@@ -29,7 +36,7 @@ export default function App (): JSX.Element {
           />
           <Route path={AppRoute.Favorites} element = {
             <PrivateRoute authorizationStatus={getAuthorizationStatus()}>
-              <FavoritesPage data={store.getState().offers}/>
+              <FavoritesPage/>
             </PrivateRoute>
           }
           />

@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 import { SORT_TYPES, SortTypesType } from '../constants';
-import { changeSortAction } from '../store/actions';
 import { useAppDispatch } from '../store/helpers';
+import { setSort } from '../store/slices/app';
 
 
 export default function PlacesSortForm ({currentSort}:{currentSort: SortTypesType}): JSX.Element {
@@ -10,7 +10,7 @@ export default function PlacesSortForm ({currentSort}:{currentSort: SortTypesTyp
   const dispatch = useAppDispatch();
 
   const handleCityChange = (sort: SortTypesType): void => {
-    dispatch(changeSortAction(sort));
+    dispatch(setSort(sort));
     setIsOpen(false);
   };
 
