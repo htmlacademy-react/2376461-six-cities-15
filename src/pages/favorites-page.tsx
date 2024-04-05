@@ -2,7 +2,8 @@ import { LOCATIONS } from '../constants';
 import FavoritePlaces from '../components/card/favorite-places';
 import { typeCard } from '../types';
 
-export default function FavoritesPage({data}: {data: typeCard[]}) {
+export default function FavoritesPage() {
+  const data: typeCard[] = [];//пока пусто
   const favoritesList = data.filter((item) => item.isFavorite === true);
 
 

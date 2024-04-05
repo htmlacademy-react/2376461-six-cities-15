@@ -2,13 +2,13 @@
 import { CitiesType } from '../constants';
 import { LocationButtonType } from '../types';
 import { useAppDispatch } from '../store/helpers';
-import { changeCityAction } from '../store/actions';
+import { setCity } from '../store/slices/app';
 
 export default function LocationButton ({ name, isActive }: LocationButtonType): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleCityChange = (city: CitiesType): void => {
-    dispatch(changeCityAction(city));
+    dispatch(setCity(city));
   };
 
   return(

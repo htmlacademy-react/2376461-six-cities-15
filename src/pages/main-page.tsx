@@ -5,22 +5,31 @@ import PlacesSortForm from '../components/places-sort-form';
 
 import { typeCard } from '../types';
 import { Nullable } from 'vitest';
-import { LOCATIONS } from '../constants';
+import { LOCATIONS, RequestStatus } from '../constants';
 import { Map } from '../components/map';
 import { useAppSelector } from '../store/helpers';
 import { sortCards } from '../utils/sort-cards';
+import { offersSelectors } from '../store/slices/offers';
+import Spinner from '../components/spinner/spinner';
 
-export default function MainPage ({data}: {data: typeCard[]}): JSX.Element {
-
+export default function MainPage (): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Nullable<typeCard>>(null);
-  const currentCity = useAppSelector((state) => state.currentCity);
-  const currentSort = useAppSelector((state) => state.currentSort);
+
+  const data: typeCard[] = useAppSelector(offersSelectors.offers);
+  const status = useAppSelector(offersSelectors.offersStatus);
+  const currentCity = useAppSelector((state) => state.app.currentCity);
+  const currentSort = useAppSelector((state) => state.app.currentSort);
+
+  if(status === RequestStatus.Loading){
+    return <Spinner/>;
+  }
 
   const handleHoverOnCard = (offer?: typeCard): void => {
     setActiveOffer(offer || null);
   };
   const filteredDataByCity = data.filter((item) => item.city.name === currentCity);
   const sortedCards = sortCards(currentSort,filteredDataByCity);
+
 
   const cardList = sortedCards.map((cardItem) => (
     <CardOffer
@@ -31,7 +40,6 @@ export default function MainPage ({data}: {data: typeCard[]}): JSX.Element {
   ));
   const buttonList = Object.keys(LOCATIONS).map((item) => <LocationButton key={item} name={item} isActive = {currentCity === item} />);
 
-  //В результате работы 36 строки образуется визуальный баг - синяя полоса сверху. Очеь интересно почему так
   return(
     <main className= {`page__main page__main--index ${filteredDataByCity.length === 0 ? 'cities__places-container--empty' : ''}`}>
       <h1 className="visually-hidden">Cities</h1>
