@@ -1,29 +1,23 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { typeCard } from '../../types';
 import { AppRoute, AuthorizationStatus } from '../../constants';
-import { changeFavoriteStatus } from '../../store/thunk/offers';
+import { capitalizedWord } from '../../utils/utils';
 import { useAppDispatch } from '../../store/helpers';
-import { changeIsFavorite } from '../../store/slices/offers';
+import { changeFavoriteStatus } from '../../store/thunk/offers';
+import { useState } from 'react';
 import { useAuth } from '../../hooks/use-auth';
 
 type cardProps = {
   card: typeCard;
-  handleHover: (offer?: typeCard) => void;
 }
 
-export default function CardOffer ({card,handleHover}: cardProps): JSX.Element{
+export default function CardNearPlace ({card}: cardProps): JSX.Element{
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isAuthorized = useAuth() === AuthorizationStatus.Auth;
-  const {id,isFavorite,isPremium,previewImage,price,rating,title,type} = card;
+  const [isFavorite, setIsFavorite] = useState(card.isFavorite);
+  const {id,isPremium,previewImage,price,rating,title,type} = card;
   const favoriteStatus = isFavorite ? 0 : 1;
-
-  const handleMouseEnter = () => {
-    handleHover(card);
-  };
-  const handleMouseExit = () => {
-    handleHover();
-  };
 
   const handleChangeFavorite = () => {
     if(!isAuthorized){
@@ -35,23 +29,20 @@ export default function CardOffer ({card,handleHover}: cardProps): JSX.Element{
       status: favoriteStatus
     };
 
-    dispatch(changeFavoriteStatus(payload));
-    dispatch(changeIsFavorite({offerId:id,favoriteStatus:favoriteStatus}));
+    dispatch(changeFavoriteStatus(payload)).unwrap().then(()=>{
+      setIsFavorite(!isFavorite);
+    });
   };
 
   return(
-    <article
-      className="cities__card place-card"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseExit}
-    >
+    <article className="near-places__card place-card">
       {isPremium &&
-    <div className="place-card__mark">
-      <span>Premium</span>
-    </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+        <div className="place-card__mark">
+          {<span>Premium</span>}
+        </div>}
+      <div className="near-places__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Offer}${id}`}>
-          <img className="place-card__image" src= {previewImage} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
       <div className="place-card__info">
@@ -60,11 +51,11 @@ export default function CardOffer ({card,handleHover}: cardProps): JSX.Element{
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button onClick={handleChangeFavorite} className={isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button button'} type="button">
+          <button onClick={handleChangeFavorite} className={`place-card__bookmark-button ${isFavorite && 'place-card__bookmark-button--active'} button`} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -76,7 +67,7 @@ export default function CardOffer ({card,handleHover}: cardProps): JSX.Element{
         <h2 className="place-card__name">
           <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalizedWord(type)}</p>
       </div>
     </article>
   );

@@ -1,19 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CardOffer from '../components/card/card-offer';
 import LocationButton from '../components/location-button';
 import PlacesSortForm from '../components/places-sort-form';
 
 import { typeCard } from '../types';
 import { Nullable } from 'vitest';
-import { LOCATIONS, RequestStatus } from '../constants';
+import { AuthorizationStatus, LOCATIONS, RequestStatus } from '../constants';
 import { Map } from '../components/map';
-import { useAppSelector } from '../store/helpers';
+import { useAppDispatch, useAppSelector } from '../store/helpers';
 import { sortCards } from '../utils/sort-cards';
 import { offersSelectors } from '../store/slices/offers';
 import Spinner from '../components/spinner/spinner';
+import { fetchAllOffers, fetchFavoriteOffers } from '../store/thunk/offers';
+import { useAuth } from '../hooks/use-auth';
+import MainEmpty from '../components/main-empty';
 
 export default function MainPage (): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Nullable<typeCard>>(null);
+  const isAuthorized = useAuth() === AuthorizationStatus.Auth;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllOffers());
+    if(isAuthorized){
+      dispatch(fetchFavoriteOffers());
+    }
+  },[dispatch,isAuthorized]);
 
   const data: typeCard[] = useAppSelector(offersSelectors.offers);
   const status = useAppSelector(offersSelectors.offersStatus);
@@ -41,7 +53,7 @@ export default function MainPage (): JSX.Element {
   const buttonList = Object.keys(LOCATIONS).map((item) => <LocationButton key={item} name={item} isActive = {currentCity === item} />);
 
   return(
-    <main className= {`page__main page__main--index ${filteredDataByCity.length === 0 ? 'cities__places-container--empty' : ''}`}>
+    <main className= {`page__main page__main--index ${filteredDataByCity.length === 0 ? 'page__main--index-empty' : ''}`}>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
@@ -51,19 +63,20 @@ export default function MainPage (): JSX.Element {
         </section>
       </div>
       <div className="cities">
-        <div className="cities__places-container container">
-          <section className="cities__places places">
-            <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{filteredDataByCity.length} place{filteredDataByCity.length > 1 ? 's' : ''} to stay in Amsterdam</b>
-            <PlacesSortForm currentSort={currentSort}/>
-            <div className="cities__places-list places__list tabs__content">
-              {cardList}
+        {sortedCards.length > 0 ?
+          <div className="cities__places-container container">
+            <section className="cities__places places">
+              <h2 className="visually-hidden">Places</h2>
+              <b className="places__found">{filteredDataByCity.length} place{filteredDataByCity.length > 1 ? 's' : ''} to stay in Amsterdam</b>
+              <PlacesSortForm currentSort={currentSort}/>
+              <div className="cities__places-list places__list tabs__content">
+                {cardList}
+              </div>
+            </section>
+            <div className="cities__right-section">
+              <Map className='cities__map map' city={filteredDataByCity[0].city} offers={filteredDataByCity} activeOfferId={activeOffer?.id} key={'map'}/>
             </div>
-          </section>
-          <div className="cities__right-section">
-            <Map className='cities__map map' city={data[0].city} offers={data} activeOfferId={activeOffer?.id} key={'map'}/>
-          </div>
-        </div>
+          </div> : <MainEmpty/>}
       </div>
     </main>
   );

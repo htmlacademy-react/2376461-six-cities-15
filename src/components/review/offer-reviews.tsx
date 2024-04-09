@@ -1,14 +1,12 @@
-import { commentsData } from '../../mock/comments-data';
 import ReviewList from './reviews-list';
 import { AuthorizationStatus } from '../../constants';
-import { getAuthorizationStatus } from '../../mock/auth-status';
-import { typeOffer } from '../../types';
+import { typeComment } from '../../types';
 import ReviewsForm from './form-reviews';
+import { useAuth } from '../../hooks/use-auth';
 
-export default function OfferReviews(offer: typeOffer) {
+export default function OfferReviews({comments} : {comments : typeComment[]}) {
 
-  const isAuth = getAuthorizationStatus();
-  const comments = commentsData.filter((item) => item.id === offer.id);
+  const isAuth = useAuth();
 
   return(
     <section className="offer__reviews reviews">

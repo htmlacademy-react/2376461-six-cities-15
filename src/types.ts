@@ -22,6 +22,11 @@ type typeUser = {
   isPro: boolean;
 }
 
+type AuthenticatedUserType = typeHost & {
+  email: string;
+  token: string;
+};
+
 type typeComment = {
   id: string;
   date: string;
@@ -65,4 +70,4 @@ type LocationButtonType = {
   isActive: boolean;
 };
 
-export type { LocationButtonType, typeCard, typeOffer, typeLocation, typeCity, typeUser, typeComment };
+export type { LocationButtonType, typeCard, typeOffer, typeLocation, typeCity, typeUser, typeComment, AuthenticatedUserType };

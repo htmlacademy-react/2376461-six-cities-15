@@ -7,18 +7,21 @@ import OfferPage from '../pages/offer-page';
 import ErrorPage from '../pages/error-page';
 import { AppRoute } from '../constants';
 import Layout from './layout';
-import { getAuthorizationStatus } from '../mock/auth-status';
-import { useAppDispatch } from '../store/helpers';
 import { useEffect } from 'react';
-import { fetchAllOffers } from '../store/thunk/offers';
+import { useAuth } from '../hooks/use-auth';
+import { getToken } from '../api/token';
+import { checkAuth } from '../store/thunk/auth';
+import { useAppDispatch } from '../store/helpers';
 
 export default function App (): JSX.Element {
-
   const dispatch = useAppDispatch();
-
+  const token = getToken();
+  const authStatus = useAuth();
   useEffect(() => {
-    dispatch(fetchAllOffers());
-  },[dispatch]);
+    if(token){
+      dispatch(checkAuth());
+    }
+  },[token,dispatch]);
 
   return(
     <BrowserRouter>
@@ -29,13 +32,13 @@ export default function App (): JSX.Element {
         >
           <Route index element = {<MainPage/>}/>
           <Route path={AppRoute.Login} element = {
-            <PrivateRoute authorizationStatus={getAuthorizationStatus()} isReverse>
+            <PrivateRoute authorizationStatus={authStatus} isReverse>
               <LoginPage/>
             </PrivateRoute>
           }
           />
           <Route path={AppRoute.Favorites} element = {
-            <PrivateRoute authorizationStatus={getAuthorizationStatus()}>
+            <PrivateRoute authorizationStatus={authStatus}>
               <FavoritesPage/>
             </PrivateRoute>
           }
