@@ -1,7 +1,31 @@
+import { FormEvent, MouseEventHandler, ReactEventHandler, useState } from 'react';
+import { login } from '../store/thunk/auth';
+import { useAppDispatch } from '../store/helpers';
 
+type ChangeHandler = ReactEventHandler<HTMLElement | HTMLTextAreaElement>;
 
 export default function LoginPage() {
 
+  const dispatch = useAppDispatch();
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
+  const handleInputChange: ChangeHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.currentTarget;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleSubmit: MouseEventHandler<HTMLButtonElement> = (evt: FormEvent<EventTarget>) => {
+    evt.preventDefault();
+
+    dispatch(login(formData));
+  };
 
   return (
     <main className="page__main page__main--login">
@@ -11,13 +35,13 @@ export default function LoginPage() {
           <form className="login__form form" action="#" method="post">
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">E-mail</label>
-              <input className="login__input form__input" type="email" name="email" placeholder="Email" required/>
+              <input className="login__input form__input" onChange={handleInputChange} value={formData.email} type="email" name="email" placeholder="Email" required/>
             </div>
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">Password</label>
-              <input className="login__input form__input" type="password" name="password" placeholder="Password" required/>
+              <input className="login__input form__input" onChange={handleInputChange} value={formData.password} type="password" name="password" placeholder="Password" required/>
             </div>
-            <button className="login__submit form__submit button" type="submit">Sign in</button>
+            <button onClick={handleSubmit} className="login__submit form__submit button" type="submit">Sign in</button>
           </form>
         </section>
         <section className="locations locations--login locations--current">

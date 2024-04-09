@@ -20,6 +20,7 @@ export const AuthorizationStatus = {
   NoAuth: 'NoAuth',
   Unknown: 'Unknown',
 } as const;
+export type AuthorizationStatusType = typeof AuthorizationStatus[keyof typeof AuthorizationStatus];
 
 export type SortTypesType = typeof SORT_TYPES[keyof typeof SORT_TYPES];
 

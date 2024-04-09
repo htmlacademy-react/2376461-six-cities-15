@@ -1,6 +1,10 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../constants';
-import { getAuthorizationStatus } from '../mock/auth-status';
+import { useAuth } from '../hooks/use-auth';
+import { useAppDispatch, useAppSelector } from '../store/helpers';
+import { userSelectors } from '../store/slices/user';
+import { logout } from '../store/thunk/auth';
+import { offersSelectors } from '../store/slices/offers';
 
 type LayoutStateTuple = [string, string, boolean];
 
@@ -23,8 +27,17 @@ const getLayoutState = (pathName: AppRoute): LayoutStateTuple => {
 export default function Layout () {
 
   const {pathname} = useLocation();
+  const user = useAppSelector(userSelectors.user);
+  const favorites = useAppSelector(offersSelectors.favorites);
+
   const [mainClassName,linkClassName,shouldRenderUser] = getLayoutState(pathname as AppRoute);
-  const authorizationStatus = getAuthorizationStatus();
+  const authorizationStatus = useAuth() === AuthorizationStatus.Auth;
+
+  const dispatch = useAppDispatch();
+
+  const logoutHandle = (): void => {
+    dispatch(logout());
+  };
 
   return(
     <div className={mainClassName}>
@@ -43,17 +56,17 @@ export default function Layout () {
                     <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
-                      {authorizationStatus === AuthorizationStatus.Auth ? (
+                      {authorizationStatus ? (
                         <>
-                          <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                          <span className="header__favorite-count">3</span>
+                          <span className="header__user-name user__name">{user?.email}</span>
+                          <span className="header__favorite-count">{favorites.length}</span>
                         </>) : <span className="header__login">Sign in</span>}
                     </Link>
                   </li>
-                  {authorizationStatus === AuthorizationStatus.Auth ? (
+                  {authorizationStatus ? (
                     <li className="header__nav-item">
                       <a className="header__nav-link" href="#">
-                        <span className="header__signout">Sign out</span>
+                        <span onClick={logoutHandle} className="header__signout">Sign out</span>
                       </a>
                     </li>) : null}
                 </ul>
