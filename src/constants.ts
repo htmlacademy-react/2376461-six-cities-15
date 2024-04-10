@@ -7,7 +7,7 @@ export const LOCATIONS = {
   Dusseldorf: 'Dusseldorf',
 };
 export type CitiesType = typeof LOCATIONS[keyof typeof LOCATIONS];
-
+//12
 export enum AppRoute {
   Main = '/',
   Login = '/login',
