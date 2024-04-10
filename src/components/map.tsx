@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import leaflet, { LayerGroup } from 'leaflet';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../constants';
@@ -24,7 +24,7 @@ const activeMarkerIcon = leaflet.icon({
   iconAnchor: [20,20]
 });
 
-export const Map = ({city,offers,activeOfferId,className}: MapProps) => {
+const Map = ({city,offers,activeOfferId,className}: MapProps) => {
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const map = useMap({location: city.location, containerRef: mapContainerRef});
@@ -54,3 +54,5 @@ export const Map = ({city,offers,activeOfferId,className}: MapProps) => {
 
   return <section className={className} ref={mapContainerRef}/>;
 };
+
+export const MemoizedMap = memo(Map);

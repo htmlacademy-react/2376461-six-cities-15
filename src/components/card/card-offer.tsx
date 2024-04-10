@@ -5,13 +5,14 @@ import { changeFavoriteStatus } from '../../store/thunk/offers';
 import { useAppDispatch } from '../../store/helpers';
 import { changeIsFavorite } from '../../store/slices/offers';
 import { useAuth } from '../../hooks/use-auth';
+import { memo } from 'react';
 
 type cardProps = {
   card: typeCard;
   handleHover: (offer?: typeCard) => void;
 }
 
-export default function CardOffer ({card,handleHover}: cardProps): JSX.Element{
+const CardOffer = memo(({ card, handleHover }: cardProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isAuthorized = useAuth() === AuthorizationStatus.Auth;
@@ -81,4 +82,8 @@ export default function CardOffer ({card,handleHover}: cardProps): JSX.Element{
     </article>
   );
 
-}
+});
+
+CardOffer.displayName = 'CardOffer';
+
+export default CardOffer;

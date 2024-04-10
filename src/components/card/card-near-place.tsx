@@ -4,14 +4,14 @@ import { AppRoute, AuthorizationStatus } from '../../constants';
 import { capitalizedWord } from '../../utils/utils';
 import { useAppDispatch } from '../../store/helpers';
 import { changeFavoriteStatus } from '../../store/thunk/offers';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { useAuth } from '../../hooks/use-auth';
 
 type cardProps = {
   card: typeCard;
 }
 
-export default function CardNearPlace ({card}: cardProps): JSX.Element{
+const CardNearPlace = memo(({ card }: cardProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isAuthorized = useAuth() === AuthorizationStatus.Auth;
@@ -72,4 +72,8 @@ export default function CardNearPlace ({card}: cardProps): JSX.Element{
     </article>
   );
 
-}
+});
+
+CardNearPlace.displayName = 'CardNearPlace';
+
+export default CardNearPlace;

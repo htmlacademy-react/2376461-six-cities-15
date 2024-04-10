@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, memo } from 'react';
 import CardFavorite from './card-favorite';
 import { typeCard } from '../../types';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,7 @@ type placesProps = {
   locations: typeCard[];
 };
 
-export default function FavoritePlaces({name,locations}: placesProps): ReactNode {
+const FavoritePlaces = memo(({ name, locations }: placesProps): ReactNode => {
 
   const cards = locations.map((item) => <CardFavorite key={item.id} card={item} />);
 
@@ -27,4 +27,8 @@ export default function FavoritePlaces({name,locations}: placesProps): ReactNode
       </div>
     </li>
   );
-}
+});
+
+FavoritePlaces.displayName = 'FavoritePlaces';
+
+export default FavoritePlaces;

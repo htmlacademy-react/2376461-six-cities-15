@@ -6,12 +6,13 @@ import { useAppDispatch } from '../../store/helpers';
 import { changeFavoriteStatus } from '../../store/thunk/offers';
 import { changeIsFavorite } from '../../store/slices/offers';
 import { useAuth } from '../../hooks/use-auth';
+import { memo } from 'react';
 
 type cardProps = {
   card: typeCard;
 }
 
-export default function CardFavorite ({card}: cardProps): JSX.Element{
+const CardFavorite = memo(({ card }: cardProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isAuthorized = useAuth() === AuthorizationStatus.Auth;
@@ -70,4 +71,7 @@ export default function CardFavorite ({card}: cardProps): JSX.Element{
     </article>
   );
 
-}
+});
+
+CardFavorite.displayName = 'CardFavorite';
+export default CardFavorite;
