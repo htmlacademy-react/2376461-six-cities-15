@@ -1,4 +1,4 @@
-export const LOCATIONS = {
+okexport const LOCATIONS = {
   Paris: 'Paris',
   Cologne: 'Cologne',
   Brussels: 'Brussels',
