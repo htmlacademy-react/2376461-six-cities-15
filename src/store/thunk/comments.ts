@@ -21,18 +21,4 @@ export const postComment = createAsyncThunk<typeComment, PostCommentProps, {extr
     return responce.data;
   }
 );
-/*
-const addCommentAction = createAppAsyncThunk<
-typeComment,
-  Pick<CommentData, 'comment' | 'rating'> & { id: OfferDetailData['id'] },
-  AsyncActionsArgsType
->(
-  'send/addComment',
-  async ({id: offerId, comment, rating}, { extra: api}) => {
-    const response = await api.post<typeComment>(
-      setOfferIdInRoute(API_ROUTE.Post.AddComment, offerId), { comment, rating }
-    );
 
-    return response.data;
-  },
-);*/
