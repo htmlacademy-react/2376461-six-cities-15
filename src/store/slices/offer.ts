@@ -22,7 +22,7 @@ const initialState: OfferState = {
   commentStatus: RequestStatus.Idle,
   comments: []
 };
-//почему RequestStatus.Loading?? а не Idle - потому что idle 0 и проверка на Loading в main не отработате и будет error
+
 const offerSlice = createSlice({
   extraReducers: (builder) =>
     builder

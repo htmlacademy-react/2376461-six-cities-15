@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { typeCard, typeComment } from '../../types';
 import type { AxiosInstance } from 'axios';
 
-//коммент должен браться по id offera
 export const fetchAllComments = createAsyncThunk<typeComment[], string, {extra: AxiosInstance}>(
   'fetchOffers/comments', async (offerId, {extra: api}) => {
     const responce = await api.get<typeComment[]>(`/comments/${offerId}`);

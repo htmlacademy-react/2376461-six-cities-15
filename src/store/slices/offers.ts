@@ -24,7 +24,7 @@ const initialState: OffersState = {
   favorites: [],
   status: RequestStatus.Loading,
 };
-//почему RequestStatus.Loading?? а не Idle - потому что idle 0 и проверка на Loading в main не отработате и будет error
+
 const offersSlice = createSlice({
   extraReducers: (builder) =>
     builder
