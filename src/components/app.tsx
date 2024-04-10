@@ -5,13 +5,14 @@ import LoginPage from '../pages/login-page';
 import FavoritesPage from '../pages/favorites-page';
 import OfferPage from '../pages/offer-page';
 import ErrorPage from '../pages/error-page';
-import { AppRoute } from '../constants';
+import { AppRoute, AuthorizationStatus } from '../constants';
 import Layout from './layout';
 import { useEffect } from 'react';
 import { useAuth } from '../hooks/use-auth';
 import { getToken } from '../api/token';
 import { checkAuth } from '../store/thunk/auth';
 import { useAppDispatch } from '../store/helpers';
+import { fetchAllOffers, fetchFavoriteOffers } from '../store/thunk/offers';
 
 export default function App (): JSX.Element {
   const dispatch = useAppDispatch();
@@ -22,6 +23,15 @@ export default function App (): JSX.Element {
       dispatch(checkAuth());
     }
   },[token,dispatch]);
+
+  const isAuthorized = useAuth() === AuthorizationStatus.Auth;
+
+  useEffect(() => {
+    dispatch(fetchAllOffers());
+    if(isAuthorized){
+      dispatch(fetchFavoriteOffers());
+    }
+  },[dispatch,isAuthorized]);
 
   return(
     <BrowserRouter>

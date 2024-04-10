@@ -1,31 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CardOffer from '../components/card/card-offer';
 import LocationButton from '../components/location-button';
 import PlacesSortForm from '../components/places-sort-form';
 
 import { typeCard } from '../types';
 import { Nullable } from 'vitest';
-import { AuthorizationStatus, LOCATIONS, RequestStatus } from '../constants';
+import { LOCATIONS, RequestStatus } from '../constants';
 import { Map } from '../components/map';
-import { useAppDispatch, useAppSelector } from '../store/helpers';
+import { useAppSelector } from '../store/helpers';
 import { sortCards } from '../utils/sort-cards';
 import { offersSelectors } from '../store/slices/offers';
 import Spinner from '../components/spinner/spinner';
-import { fetchAllOffers, fetchFavoriteOffers } from '../store/thunk/offers';
-import { useAuth } from '../hooks/use-auth';
 import MainEmpty from '../components/main-empty';
 
 export default function MainPage (): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Nullable<typeCard>>(null);
-  const isAuthorized = useAuth() === AuthorizationStatus.Auth;
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAllOffers());
-    if(isAuthorized){
-      dispatch(fetchFavoriteOffers());
-    }
-  },[dispatch,isAuthorized]);
 
   const data: typeCard[] = useAppSelector(offersSelectors.offers);
   const status = useAppSelector(offersSelectors.offersStatus);
