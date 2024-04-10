@@ -1,5 +1,5 @@
-import { useParams } from 'react-router-dom';
-import { Fragment, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Fragment, useEffect, useState } from 'react';
 import ErrorPage from './error-page';
 import { capitalizedWord } from '../utils/utils';
 import { Map } from '../components/map';
@@ -9,16 +9,22 @@ import { useAppDispatch, useAppSelector } from '../store/helpers';
 import { offerSelectors } from '../store/slices/offer';
 import { fetchNearby } from '../store/thunk/nearby';
 import { fetchAllComments } from '../store/thunk/comments';
-import { RequestStatus } from '../constants';
+import { AppRoute, AuthorizationStatus, RequestStatus } from '../constants';
 import Spinner from '../components/spinner/spinner';
 import CardNearPlace from '../components/card/card-near-place';
+import { changeFavoriteStatus } from '../store/thunk/offers';
+import { useAuth } from '../hooks/use-auth';
+import { changeIsFavorite } from '../store/slices/offers';
 
 
 export default function OfferPage() {
   const {id} = useParams();
   const dispatch = useAppDispatch();
 
+  const navigate = useNavigate();
+  const isAuthorized = useAuth() === AuthorizationStatus.Auth;
   const currentOffer = useAppSelector(offerSelectors.offer);
+  const [isFavorite, setIsFavorite] = useState(false);
   const status = useAppSelector(offerSelectors.offerStatus);
   const nearOffersFetched = useAppSelector(offerSelectors.nearby);
   const comments = useAppSelector(offerSelectors.comments);
@@ -30,6 +36,12 @@ export default function OfferPage() {
     dispatch(fetchAllComments(id as string));
   },[dispatch,id]);
 
+  useEffect(() => {
+    if (currentOffer) {
+      setIsFavorite(currentOffer.isFavorite);
+    }
+  }, [currentOffer]);
+
   if(status === RequestStatus.Loading){
     return <Spinner/>;
   }
@@ -37,6 +49,22 @@ export default function OfferPage() {
   if(!currentOffer){
     return <ErrorPage />;
   }
+
+  const handleChangeFavorite = () => {
+    if(!isAuthorized){
+      navigate(AppRoute.Login);
+      return;
+    }
+    const payload = {
+      offerId: id as string,
+      status: isFavorite ? 0 : 1
+    };
+
+    setIsFavorite(!isFavorite);
+    dispatch(changeFavoriteStatus(payload)).unwrap().then(()=>{
+      dispatch(changeIsFavorite({offerId:id as string,favoriteStatus: isFavorite ? 0 : 1}));
+    });
+  };
 
   const nearOffers = [currentOffer,...nearOffersFetched.slice(0,3)];
   const nearCards = nearOffersFetched.slice(0,3).map((item) => <CardNearPlace key={item.id} card={item} />);
@@ -66,7 +94,7 @@ export default function OfferPage() {
               <h1 className="offer__name">
                 {currentOffer.title}
               </h1>
-              <button className={`offer__bookmark-button ${currentOffer.isFavorite && 'offer__bookmark-button--active'} button`} type="button">
+              <button onClick={handleChangeFavorite} className={`offer__bookmark-button ${isFavorite && 'offer__bookmark-button--active'} button`} type="button">
                 <svg className="offer__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
                 </svg>
