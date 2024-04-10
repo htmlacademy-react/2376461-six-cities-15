@@ -16,7 +16,7 @@ export const fetchFavoriteOffers = createAsyncThunk<typeOffer[], undefined, {ext
     return responce.data;
   }
 );
-///{offerId}/{status}
+
 type typeChangeFavorite = {
   offerId: string;
   status: number;
