@@ -1,10 +1,11 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../constants';
+import { AppRoute, AuthorizationStatus, CitiesType, LOCATIONS } from '../constants';
 import { useAuth } from '../hooks/use-auth';
 import { useAppDispatch, useAppSelector } from '../store/helpers';
 import { userSelectors } from '../store/slices/user';
 import { logout } from '../store/thunk/auth';
 import { offersSelectors } from '../store/slices/offers';
+import { setCity } from '../store/slices/app';
 
 type LayoutStateTuple = [string, string, boolean];
 
@@ -38,6 +39,9 @@ export default function Layout () {
   const logoutHandle = (): void => {
     dispatch(logout());
   };
+  const handleCityChange = (city: CitiesType) => {
+    dispatch(setCity(city));
+  };
 
   return(
     <div className={mainClassName}>
@@ -53,9 +57,9 @@ export default function Layout () {
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
-                    <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
+                    <Link onClick={() => handleCityChange(LOCATIONS.Paris)} to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
                       <div className="header__avatar-wrapper user__avatar-wrapper">
-                        <img className="user__avatar" src= {user?.avatarUrl} width="54" height="54" alt="User avatar"/>
+                        {user && <img className="user__avatar" src= {user?.avatarUrl} width="54" height="54" alt="User avatar"/>}
                       </div>
                       {authorizationStatus ? (
                         <>

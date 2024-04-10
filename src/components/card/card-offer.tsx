@@ -1,11 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { typeCard } from '../../types';
-import { AppRoute, AuthorizationStatus } from '../../constants';
+import { AppRoute, AuthorizationStatus, CitiesType, LOCATIONS } from '../../constants';
 import { changeFavoriteStatus } from '../../store/thunk/offers';
 import { useAppDispatch } from '../../store/helpers';
 import { changeIsFavorite } from '../../store/slices/offers';
 import { useAuth } from '../../hooks/use-auth';
 import { memo } from 'react';
+import { setCity } from '../../store/slices/app';
 
 type cardProps = {
   card: typeCard;
@@ -18,6 +19,10 @@ const CardOffer = memo(({ card, handleHover }: cardProps): JSX.Element => {
   const isAuthorized = useAuth() === AuthorizationStatus.Auth;
   const {id,isFavorite,isPremium,previewImage,price,rating,title,type} = card;
   const favoriteStatus = isFavorite ? 0 : 1;
+
+  const handleCityChange = (city: CitiesType) => {
+    dispatch(setCity(city));
+  };
 
   const handleMouseEnter = () => {
     handleHover(card);
@@ -51,7 +56,7 @@ const CardOffer = memo(({ card, handleHover }: cardProps): JSX.Element => {
       <span>Premium</span>
     </div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Offer}${id}`}>
+        <Link onClick={() => handleCityChange(LOCATIONS.Paris)} to={`${AppRoute.Offer}${id}`}>
           <img className="place-card__image" src= {previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
@@ -75,7 +80,7 @@ const CardOffer = memo(({ card, handleHover }: cardProps): JSX.Element => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
+          <Link onClick={() => handleCityChange(LOCATIONS.Paris)} to={`${AppRoute.Offer}${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
