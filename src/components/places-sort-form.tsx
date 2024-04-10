@@ -1,10 +1,10 @@
-import { Fragment, useState } from 'react';
+import { Fragment, memo, useState } from 'react';
 import { SORT_TYPES, SortTypesType } from '../constants';
 import { useAppDispatch } from '../store/helpers';
 import { setSort } from '../store/slices/app';
 
 
-export default function PlacesSortForm ({currentSort}:{currentSort: SortTypesType}): JSX.Element {
+const PlacesSortForm = memo(({ currentSort }: { currentSort: SortTypesType }): JSX.Element => {
 
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
@@ -40,4 +40,8 @@ export default function PlacesSortForm ({currentSort}:{currentSort: SortTypesTyp
       )}
     </form>
   );
-}
+});
+
+PlacesSortForm.displayName = 'PlacesSortForm';
+
+export default PlacesSortForm;

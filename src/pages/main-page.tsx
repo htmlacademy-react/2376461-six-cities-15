@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import CardOffer from '../components/card/card-offer';
 import LocationButton from '../components/location-button';
 import PlacesSortForm from '../components/places-sort-form';
@@ -6,7 +6,7 @@ import PlacesSortForm from '../components/places-sort-form';
 import { typeCard } from '../types';
 import { Nullable } from 'vitest';
 import { LOCATIONS, RequestStatus } from '../constants';
-import { Map } from '../components/map';
+import { MemoizedMap } from '../components/map';
 import { useAppSelector } from '../store/helpers';
 import { sortCards } from '../utils/sort-cards';
 import { offersSelectors } from '../store/slices/offers';
@@ -21,13 +21,14 @@ export default function MainPage (): JSX.Element {
   const currentCity = useAppSelector((state) => state.app.currentCity);
   const currentSort = useAppSelector((state) => state.app.currentSort);
 
+  const handleHoverOnCard = useCallback((offer?: typeCard): void => {
+    setActiveOffer(offer || null);
+  }, []);
+
   if(status === RequestStatus.Loading){
     return <Spinner/>;
   }
 
-  const handleHoverOnCard = (offer?: typeCard): void => {
-    setActiveOffer(offer || null);
-  };
   const filteredDataByCity = data.filter((item) => item.city.name === currentCity);
   const sortedCards = sortCards(currentSort,filteredDataByCity);
 
@@ -63,7 +64,7 @@ export default function MainPage (): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              <Map className='cities__map map' city={filteredDataByCity[0].city} offers={filteredDataByCity} activeOfferId={activeOffer?.id} key={'map'}/>
+              <MemoizedMap className='cities__map map' city={filteredDataByCity[0].city} offers={filteredDataByCity} activeOfferId={activeOffer?.id} key={'map'}/>
             </div>
           </div> : <MainEmpty/>}
       </div>

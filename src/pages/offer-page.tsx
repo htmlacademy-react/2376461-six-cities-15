@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Fragment, useEffect, useState } from 'react';
 import ErrorPage from './error-page';
 import { capitalizedWord } from '../utils/utils';
-import { Map } from '../components/map';
+import { MemoizedMap } from '../components/map';
 import OfferReviews from '../components/review/offer-reviews';
 import { fetchOffer } from '../store/thunk/offer';
 import { useAppDispatch, useAppSelector } from '../store/helpers';
@@ -157,7 +157,7 @@ export default function OfferPage() {
             <OfferReviews comments={comments}/>
           </div>
         </div>
-        <Map className="offer__map map" city={currentOffer.city} activeOfferId={currentOffer.id} offers={nearOffers}/>
+        <MemoizedMap className="offer__map map" city={currentOffer.city} activeOfferId={currentOffer.id} offers={nearOffers}/>
       </section>
       <div className="container">
         <section className="near-places places">

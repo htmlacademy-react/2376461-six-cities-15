@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import { typeComment } from '../../types';
 import { formatDateNormalize, formatDateTime } from '../../utils/utils';
 
-export default function ReviewItem({comment}: {comment: typeComment}) {
+const ReviewItem = memo(({ comment }: { comment: typeComment }) => {
   const dateTime = formatDateTime(comment.date);
   const dateNormalize = formatDateNormalize(comment.date);
 
@@ -30,4 +31,8 @@ export default function ReviewItem({comment}: {comment: typeComment}) {
     </li>
   );
 
-}
+});
+
+ReviewItem.displayName = 'ReviewItem';
+
+export default ReviewItem;

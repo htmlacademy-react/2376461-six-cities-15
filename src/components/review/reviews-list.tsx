@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import { typeComment } from '../../types';
 import ReviewItem from './review-item';
 
-export default function ReviewList({comments}: {comments: typeComment[]}) {
+const ReviewList = memo(({ comments }: { comments: typeComment[] }) => {
 
   const commentsSorted = [...comments].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0,10);
 
@@ -18,4 +19,8 @@ export default function ReviewList({comments}: {comments: typeComment[]}) {
     </ul>
   );
 
-}
+});
+
+ReviewList.displayName = 'ReviewList';
+
+export default ReviewList;

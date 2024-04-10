@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, MouseEventHandler, ReactEventHandler, useRef, useState } from 'react';
+import { FC, FormEvent, Fragment, MouseEventHandler, ReactEventHandler, memo, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/helpers';
 import { postComment } from '../../store/thunk/comments';
 import { offerActions, offerSelectors } from '../../store/slices/offer';
@@ -6,7 +6,7 @@ import { RequestStatus } from '../../constants';
 
 type typeChangeHandler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
-export default function ReviewsForm () {
+const ReviewsForm: FC = memo(() => {
 
   const [review, setReview] = useState({rating: 0, review: ''});
   const formRef = useRef<HTMLFormElement>(null);
@@ -82,4 +82,8 @@ export default function ReviewsForm () {
       </div>
     </form>
   );
-}
+});
+
+ReviewsForm.displayName = 'ReviewsForm';
+
+export default ReviewsForm;

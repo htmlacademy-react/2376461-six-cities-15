@@ -1,23 +1,28 @@
-import { ReactNode } from 'react';
+import { ReactNode, memo } from 'react';
 import CardFavorite from './card-favorite';
 import { typeCard } from '../../types';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../constants';
+import { AppRoute, CitiesType } from '../../constants';
+import { setCity } from '../../store/slices/app';
+import { useAppDispatch } from '../../store/helpers';
 
 type placesProps = {
   name: string;
   locations: typeCard[];
 };
 
-export default function FavoritePlaces({name,locations}: placesProps): ReactNode {
-
+const FavoritePlaces = memo(({ name, locations }: placesProps): ReactNode => {
+  const dispatch = useAppDispatch();
+  const handleCityChange = (city: CitiesType) => {
+    dispatch(setCity(city));
+  };
   const cards = locations.map((item) => <CardFavorite key={item.id} card={item} />);
 
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <Link className="locations__item-link" to={`${AppRoute.Main}`}>
+          <Link onClick={() => handleCityChange(name)} className="locations__item-link" to={`${AppRoute.Main}`}>
             <span>{name}</span>
           </Link>
         </div>
@@ -27,4 +32,8 @@ export default function FavoritePlaces({name,locations}: placesProps): ReactNode
       </div>
     </li>
   );
-}
+});
+
+FavoritePlaces.displayName = 'FavoritePlaces';
+
+export default FavoritePlaces;

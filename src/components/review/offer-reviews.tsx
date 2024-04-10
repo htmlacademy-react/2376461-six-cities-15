@@ -3,8 +3,9 @@ import { AuthorizationStatus } from '../../constants';
 import { typeComment } from '../../types';
 import ReviewsForm from './form-reviews';
 import { useAuth } from '../../hooks/use-auth';
+import { FC } from 'react';
 
-export default function OfferReviews({comments} : {comments : typeComment[]}) {
+const OfferReviews: FC<{comments: typeComment[]}> = ({comments}) => {
 
   const isAuth = useAuth();
 
@@ -16,4 +17,7 @@ export default function OfferReviews({comments} : {comments : typeComment[]}) {
     </section>
   );
 
-}
+};
+
+export default OfferReviews;
+

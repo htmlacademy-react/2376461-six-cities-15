@@ -3,8 +3,9 @@ import { CitiesType } from '../constants';
 import { LocationButtonType } from '../types';
 import { useAppDispatch } from '../store/helpers';
 import { setCity } from '../store/slices/app';
+import { memo } from 'react';
 
-export default function LocationButton ({ name, isActive }: LocationButtonType): JSX.Element {
+const LocationButton = memo(({ name, isActive }: LocationButtonType): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const handleCityChange = (city: CitiesType): void => {
@@ -19,4 +20,8 @@ export default function LocationButton ({ name, isActive }: LocationButtonType):
     </li>
   );
 
-}
+});
+
+LocationButton.displayName = 'LocationButton';
+
+export default LocationButton;
