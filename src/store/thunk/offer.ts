@@ -8,3 +8,5 @@ export const fetchOffer = createAsyncThunk<typeOffer, string, {extra: AxiosInsta
     return responce.data;
   }
 );
+
+
