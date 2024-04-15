@@ -13,3 +13,4 @@ export function sortCards(sortType: SortTypesType, offers: typeCard[]) {
       return offers.sort((a, b) => b.rating - a.rating);
   }
 }
+//i
